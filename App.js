@@ -8,6 +8,7 @@ import {
   Text,
   View
 } from "react-native";
+import { Constants, Audio } from 'expo';
 import moment from "moment";
 export default class App extends React.Component {
   constructor(props) {
@@ -77,10 +78,21 @@ export default class App extends React.Component {
         console.log("Hi over");
         clearInterval(km);
       } else {
-
+        console.log(moment().format("HH:mm:ss"));
+        this.playSound();
       }
       
     }, intervalTime);
+  }
+  async playSound() {
+    const soundObject = new Audio.Sound();
+      try {
+        await soundObject.loadAsync(require('./assets/sounds/hello.mp3'));
+        await soundObject.playAsync();
+        // Your sound is playing!
+      } catch (error) {
+        // An error occurred!
+      }
   }
   setIntervalHour(text) {
     const pat = new RegExp(/^[0-9]*$/g);
